@@ -369,8 +369,7 @@ func (task *Task) Download() {
 		task.SetupMBTileTables()
 	} else {
 		if task.File == "" {
-			outdir := viper.GetString("output.directory")
-			task.File = filepath.Join(outdir, fmt.Sprintf("%s-z%d-%d.%s", task.Name, task.Min, task.Max, task.ID))
+			task.File = viper.GetString("output.directory")
 		}
 		os.MkdirAll(task.File, os.ModePerm)
 	}

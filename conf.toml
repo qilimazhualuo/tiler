@@ -32,21 +32,31 @@
 	# url = "https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=KDhMfHvorAFkFe64wlZb"
 	# url = "http://mt0.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
 	# url = "https://t0.tianditu.gov.cn/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=75f0434f240669f4a2df6359275146d2"
-	url = "https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=75f0434f240669f4a2df6359275146d2"
+	# url = "https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=c70bc771494f6c28cc2788192616a901"
+	# url = "https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=27bdee73ab21bfb28a743f3777e48567"
+	url = "https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=2142a7187eefe204bbbeab8c88b318dc"
 #lrs can set diff boundaries for diff levels
-  [[lrs]]
-  	min = 0
-  	max = 5
-  	geojson = "./geojson/global.geojson"
- [[lrs]]
- 	min = 6
- 	max = 8
- 	geojson = "./geojson/china.geojson"
-  [[lrs]]
- 	min = 9
-  	max = 10
-  	geojson = "./geojson/jiangsu.geojson"
- [[lrs]]
-  	min = 11
-  	max = 11
-  	geojson = "./geojson/nanjing.geojson"
+#   [[lrs]]
+#   	min = 0
+#   	max = 5
+#   	geojson = "./geojson/global.geojson"
+#  [[lrs]]
+#  	min = 6
+#  	max = 8
+#  	geojson = "./geojson/china.geojson"
+#   [[lrs]]
+#  	min = 9
+#   	max = 10
+#   	geojson = "./geojson/target.geojson"
+# [[lrs]]
+#  	min = 11
+#   	max = 11
+#   	geojson = "./geojson/target.geojson"
+	[[lrs]]
+		min = 12
+		max = 12
+		geojson = "./geojson/yl.geojson"
+	[[lrs]]
+		min = 13
+		max = 13
+		geojson = "./geojson/yl.geojson"
