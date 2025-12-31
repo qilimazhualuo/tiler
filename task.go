@@ -220,6 +220,29 @@ func (task *Task) savePipe() {
 	}
 }
 
+// tileExists 检查瓦片是否已存在
+func (task *Task) tileExists(mt maptile.Tile) bool {
+	if task.outformat == "mbtiles" {
+		// 检查 mbtiles 数据库中是否存在
+		if task.db == nil {
+			return false
+		}
+		var count int
+		td := Tile{T: mt}
+		err := task.db.QueryRow("SELECT COUNT(*) FROM tiles WHERE zoom_level = ? AND tile_column = ? AND tile_row = ?",
+			mt.Z, mt.X, td.flipY()).Scan(&count)
+		if err != nil {
+			return false
+		}
+		return count > 0
+	} else {
+		// 检查文件是否存在
+		fileName := filepath.Join(task.File, fmt.Sprintf(`%d`, mt.Z), fmt.Sprintf(`%d`, mt.X), fmt.Sprintf(`%d.%s`, mt.Y, task.TileMap.Format))
+		_, err := os.Stat(fileName)
+		return err == nil
+	}
+}
+
 // SaveTile 保存瓦片
 func (task *Task) saveTile(tile Tile) error {
 	// defer task.wg.Done()
@@ -237,6 +260,12 @@ func (task *Task) tileFetcher(mt maptile.Tile, url string) {
 	defer func() {
 		<-task.workers //workers完成并清退
 	}()
+
+	// 检查瓦片是否已存在，如果存在则跳过下载
+	if task.tileExists(mt) {
+		log.Infof("tile(z:%d, x:%d, y:%d) already exists, skipping...\n", mt.Z, mt.X, mt.Y)
+		return
+	}
 
 	prep := func(t maptile.Tile, url string) string {
 		url = strings.Replace(url, "{x}", strconv.Itoa(int(t.X)), -1)
